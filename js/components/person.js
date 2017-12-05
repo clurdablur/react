@@ -1,19 +1,33 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var Person = function() {
-    var name = 'Derek Zoolander';
-    var imageUrl = 'https://s3.drafthouse.com/images/made/zoolander-blue-steel-ben-stiller-today-tease-150720_690101f3edc8f1aa9fc8b8b754527bd5_800_450_81_s.jpg';
-    var job = 'Male model';
-    return (
-        <div className="person">
-            <div className="person-name">{name}</div>
-            <img className="person-img" src={imageUrl} />
-            <div className="person-job">
-                {job}
+var Person = React.createClass({
+    getInitialState: function() {
+        return {
+            highlight: false
+        };
+    },
+    onClick: function() {
+        this.setState({
+            highlight: !this.state.highlight
+        });
+    },
+    render: function() {
+        var classes = 'person ' + (this.state.highlight ? 'highlight' : '');
+        return (
+            <div className={classes} onClick={this.onClick}>
+                <div className="person-name">{this.props.name}</div>
+                <img className="person-img" src={this.props.imageUrl} />
+                <div className="person-job">
+                    {this.props.job}
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
+});
+
+Person.defaultProps = {
+    imageUrl: 'http://www.gravatar.com/avatar/?d=identicon'
 };
 
 module.exports = Person;
